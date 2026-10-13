@@ -113,7 +113,7 @@ def shard_to_dataframe(shard_path, fields=None):
 ## Directory Structure
 
 ```
-SOC-HAL-Dataset/
+SOCRated/
   README.md                              # This file
   metadata_001.jsonl.zst                 # Dataset version and summary (<1 KB)
   soc_tasks_1000/
