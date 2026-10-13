@@ -1,10 +1,5 @@
-**SOC-HAL: A Claim-Level Taxonomy and Benchmark for Measuring Hallucinations in LLM-Generated SOC Reports**
-
-**SOC-HAL** is a benchmark for measuring hallucinations in LLM-generated security operations (SOC) reports at the claim-level. Each case pairs a malware-analysis task or incident triage report with an evidence context, so fabricated indicators, contradicted statements, and unsupported behavioral claims can be evaluated separately from legitimate inference.
-
-The benchmark has two tracks: 1,000 structured SOC micro-task cases (soc_tasks_1000) and 100 long-form technical triage reports (soc_reports_100). All data is stored as zstd-compressed JSONL files (one JSON object per line, compressed with Zstandard).
-
-This dataset was released alongside the paper submitted to *ACM Conference on Trustworthy and Responsible AI and Computing Systems* and covers the full **Dual-Track** benchmark suite described therein.
+**SOCRates: Rating Hallucinations in LLM-Generated Security Operation Center Reporting**
+**SOCRates** is a dedicated research dataset for studying hallucinations in LLM-generated Security Operations Center (SOC) reports. It pairs security analysis outputs with evidence contexts to support the investigation of fabricated indicators, contradictory statements, and unsupported behavioral claims. The dataset provides a shared resource for developing claim extraction, evidence verification, and report correction methods, including approaches that distinguish hallucinations from justified inferences and unresolved assertions.The collection comprises 1,100 cases across two tracks: 1,000 structured security analysis tasks (soc_tasks_1000) and 100 long-form technical triage reports (soc_reports_100). The structured track includes reference outputs and controlled perturbations targeting specific report failures. Each track provides report text, associated evidence contexts, and case metadata as Zstandard-compressed JSONL files (.jsonl.zst), with one JSON object per line.
 
 ---
 
@@ -17,7 +12,6 @@ This dataset was released alongside the paper submitted to *ACM Conference on Tr
 | Track 2 cases (`soc_reports_100`) | 100 |
 | Track 1 conditions | 10 (clean baseline + 9 controlled perturbations, 100 cases each) |
 | File format | `.jsonl.zst` (JSONL + Zstandard compression) |
-| Total compressed size | ~0.76 MB |
 
 ---
 
@@ -59,16 +53,6 @@ pip install zstandard
 
 ---
 
-## 📥 Download Complete Dataset
-
-All dataset files are included directly in this repository. The total compressed size is approximately 0.76 MB.
-
-To clone the full repository:
-```bash
-git clone https://github.com/CyberSarLab/SOC-HAL-Dataset.git
-```
-
----
 
 ## Loading Data
 
@@ -148,7 +132,7 @@ SOC-HAL-Dataset/
 
 - **Compression**: Zstandard (level 19). Decompress with the `zstandard` Python library or the `zstd` CLI tool.
 - **Format**: One JSON object per line (JSONL), compressed as a single `.jsonl.zst` shard.
-- **Contexts**: Each context document contains the model-visible `provided_context`, including the ground-truth reference analysis, decompiled code (from [LCCD](http://hdl.handle.net/10754/709465)), MITRE ATT&CK technique descriptions, Windows API documentation snippets, and sample metadata. The ground-truth reference is included for comparison and verification.
+- **Contexts**: Each context document contains the model-visible `provided_context`, including the ground-truth reference analysis, decompiled code (from [LCCD](http://hdl.handle.net/10754/709465)), https://www.cyberdeep.io/genspect, MITRE ATT&CK technique descriptions, Windows API documentation snippets, and sample metadata. The ground-truth reference is included for comparison and verification.
 - **error_spans**: character spans of injected errors. Empty for clean cases.
 - **Truncation**: long task prompts, such as decompiled code, may be truncated and are marked with [...truncated...].
 - **Perturbation codes** in the `taxonomy_code` field: `CLEAN` (faithful baseline) and `P1`–`P9`; see the detailed perturbation descriptions below.
@@ -209,26 +193,9 @@ Out-of-scope uses: this dataset is intended for defensive security research and 
 
 ---
 
-## Ethical Considerations
 
-- This dataset contains **decompiled code and behavioral analysis** of real-world malware samples sourced from the LCCD (which itself sources from MalwareBazaar and DikeDataset, both public repositories).
-- The evidence contexts are derived from public malware analysis data (LCCD and MalwareBazaar static metadata). No malware binaries are included.
-- Perturbed outputs contain deliberately false statements and must not be treated as real incident documentation.
-- Hashes and indicators in the data may reference real-world malware samples and infrastructure.
 
 ---
-
-## 📜 Citation
-
-If you use this dataset, please cite:
-
-```bibtex
-@inproceedings{sochal2026,
-  title     = {{SOC-HAL}: A Claim-Level Taxonomy and Benchmark for Measuring Hallucinations in {LLM}-Generated {SOC} Reports},
-  author    = {Anonymous Authors},
-  year      = {2026}
-}
-```
 
 ---
 
